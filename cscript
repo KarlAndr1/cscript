@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+if [[ !(-d ~/.cache/cscript) ]] ; then
+	mkdir ~/.cache/cscript
+fi
+
+if cmp --silent $1 ~/.cache/cscript/last.c; then
+	~/.cache/cscript/last.out
+else
+	sed 's/#!.*/ /' $1 > /tmp/cscript_tmp.c
+	cc /tmp/cscript_tmp.c -o ~/.cache/cscript/last.out -lm
+	if [[ $? = 0 ]]; then
+		cp $1 ~/.cache/cscript/last.c
+		~/.cache/cscript/last.out
+	fi
+fi
