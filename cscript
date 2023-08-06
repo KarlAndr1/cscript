@@ -8,7 +8,8 @@ if cmp --silent $1 ~/.cache/cscript/last.c; then
 	~/.cache/cscript/last.out
 else
 	sed 's/#!.*/ /' $1 > /tmp/cscript_tmp.c
-	cc /tmp/cscript_tmp.c -o ~/.cache/cscript/last.out -lm
+	
+	cc /tmp/cscript_tmp.c -o ~/.cache/cscript/last.out -lm "-I$(dirname $1)"
 	if [[ $? = 0 ]]; then
 		cp $1 ~/.cache/cscript/last.c
 		~/.cache/cscript/last.out
